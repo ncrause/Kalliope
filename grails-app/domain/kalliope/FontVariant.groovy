@@ -199,8 +199,8 @@ class FontVariant {
 		url("${baseURL}/${id}.ttf") format("truetype"),
 		url("${baseURL}/${id}.svg") format("svg");
 	font-weight: ${weight.number()};
-	font-style: ${italic ? 'italic' : 'normal'};\n\
-	font-stretch: ${stretch.cssKeyword()}
+	font-style: ${italic ? 'italic' : 'normal'};
+	font-stretch: ${stretch.cssKeyword()};
 }
 		"""
 	}
@@ -222,8 +222,8 @@ class FontVariant {
 		url("data:application/font-sfnt;base64,${Base64.encodeBase64String(ttf)}") format("truetype"),
 		url("data:image/svg+xml;base64,${Base64.encodeBase64String(svg)}") format("svg");
 	font-weight: ${weight.number()};
-	font-style: ${italic ? 'italic' : 'normal'};\n\
-	font-stretch: ${stretch.cssKeyword()}
+	font-style: ${italic ? 'italic' : 'normal'};
+	font-stretch: ${stretch.cssKeyword()};
 }
 		"""
 	}

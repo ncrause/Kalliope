@@ -36,6 +36,8 @@ class FontController {
 	}
 
     def get(FontVariant instance) {
+		response.addHeader('Access-Control-Allow-Origin', '*')
+		response.addHeader('Vary', 'Origin')
 		response.contentType = mimeType(params.format)
 		response.outputStream << content(instance, params.format)
 		response.outputStream.flush()
