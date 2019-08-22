@@ -1,0 +1,88 @@
+/*
+* using the below "require" doesn't seem to actually work quite right - the
+* changes implied by Bootswatch are all ignored. But the @import works perfectly
+* = require bootswatch/materia/variables
+* = require bootstrap/bootstrap
+* = require bootswatch/materia/bootswatch
+*/
+/*@import "bootswatch/materia/variables";*/
+/*@import "bootswatch/spacelab/variables";*/
+@import "bootswatch/cerulean/variables";
+
+// Put in your custom bootstrap variables here
+@import "variables";
+
+@import "bootstrap/bootstrap";
+/*@import "bootswatch/materia/bootswatch";*/
+/*@import "bootswatch/spacelab/bootswatch";*/
+@import "bootswatch/cerulean/bootswatch";
+
+/*
+The down-arrow on .btn's is a little snug
+*/
+.btn {
+	&.dropdown-toggle {
+		&::before {
+			margin-right: 0.25em;
+		}
+	}
+}
+
+/*
+The below is oddly missing from _bootswap.scss for Materia (but does appear
+in the samples?)
+*/
+select, select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+#spinner {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	z-index: 16384;
+
+	.fas {
+		display: inline-block;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+}
+
+a {
+	// add a convenient little icon after the link to indicate how it's
+	// going to open/display
+	&[target="_blank"] {
+		&::after {
+			font-size: 0.5em;
+			vertical-align: super;
+			font-family: "Font Awesome 5 Free";
+			display: inline-block;	// we need this in order to make text-decoration: none actually do something
+			margin-left: 0.25em;
+			font-weight: 900;
+			content: "\f35d";
+		}
+			
+		&:hover {
+			&::after {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.form-group {
+	margin-bottom: 1rem;
+}
