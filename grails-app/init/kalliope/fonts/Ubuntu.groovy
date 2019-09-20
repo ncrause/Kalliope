@@ -32,42 +32,42 @@ class Ubuntu {
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.NORMAL,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-Regular.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-Regular.ttf").bytes, 
 				originalFilename: "Ubuntu-Regular.ttf"))
 		font.addToVariants(new FontVariant(italic: true,
 				weight: FontVariant.Weight.NORMAL,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-RegularItalic.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-RegularItalic.ttf").bytes, 
 				originalFilename: "Ubuntu-RegularItalic.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.BOLD,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-Bold.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-Bold.ttf").bytes, 
 				originalFilename: "Ubuntu-Bold.ttf"))
 		font.addToVariants(new FontVariant(italic: true,
 				weight: FontVariant.Weight.BOLD,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-BoldItalic.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-BoldItalic.ttf").bytes, 
 				originalFilename: "Ubuntu-BoldItalic.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.LIGHT,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-Light.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-Light.ttf").bytes, 
 				originalFilename: "Ubuntu-Light.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.LIGHT,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-LightItalic.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-LightItalic.ttf").bytes, 
 				originalFilename: "Ubuntu-LightItalic.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.MEDIUM,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-Medium.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-Medium.ttf").bytes, 
 				originalFilename: "Ubuntu-Medium.ttf"))
 		font.addToVariants(new FontVariant(italic: true,
 				weight: FontVariant.Weight.MEDIUM,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/ubuntu/Ubuntu-MediumItalic.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/ubuntu/Ubuntu-MediumItalic.ttf").bytes, 
 				originalFilename: "Ubuntu-MediumItalic.ttf"))
 
 		font.save()

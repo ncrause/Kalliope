@@ -53,6 +53,7 @@
 				<f:display property="font.name" theme="horizontal" />
 				<f:display property="weight" theme="horizontal" />
 				<f:display property="stretch" theme="horizontal" />
+				<f:display property="italic" theme="horizontal" />
 			</f:with>
 			
 			<div class="form-group row">
@@ -72,7 +73,7 @@
 			
 			<g:form resource="${fontVariant}" method="DELETE">
 				<nav class="btn-toolbar" role="toolbar">
-					<g:link action="edit" resource="${fontVariant}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i> <g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:link namespace="admin" action="edit" resource="${fontVariant}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i> <g:message code="default.button.edit.label" default="Edit" /></g:link>
 					&emsp;
 					<button type="submit" class="btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"><i class="fas fa-trash-alt"></i> <g:message code="default.button.delete.label" default="Delete" /></button>
 				</nav>

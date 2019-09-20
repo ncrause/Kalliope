@@ -109,44 +109,59 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.apache.derby.jdbc.EmbeddedDriver
-    username: sa
-    password: ''
 
 environments:
     development:
         dataSource:
             dbCreate: create-drop
-#            # for some reason, hibernate cannot deduce the dialect for in-memory databases
+            username: sa
+            password: ''
+            # for some reason, hibernate cannot deduce the dialect for Derby databases
+#            driverClassName: org.apache.derby.jdbc.EmbeddedDriver
 #            dialect: org.hibernate.dialect.DerbyDialect
-#            url: jdbc:derby:memory:db;create=true
-            url: jdbc:derby:directory:db/kalliope;create=true
+#            url: jdbc:derby:memory:devDB;create=true
+#            url: jdbc:derby:directory:db/kalliope;create=true
+            driverClassName: org.h2.Driver
+            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+
     test:
         dataSource:
             dbCreate: create-drop
-            # for some reason, hibernate cannot deduce the dialect for in-memory databases
-            dialect: org.hibernate.dialect.DerbyDialect
-            url: jdbc:derby:memory:db;create=true
-#            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            username: sa
+            password: ''
+#            driverClassName: org.apache.derby.jdbc.EmbeddedDriver
+            # for some reason, hibernate cannot deduce the dialect for Derby databases
+#            dialect: org.hibernate.dialect.DerbyDialect
+#            url: jdbc:derby:memory:testDB;create=true
+            driverClassName: org.h2.Driver
+            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+
     production:
         dataSource:
-            dbCreate: none
-            url: jdbc:derby:directory:db/kalliope;create=true
-            properties:
-                jmxEnabled: true
-                initialSize: 5
-                maxActive: 50
-                minIdle: 5
-                maxIdle: 25
-                maxWait: 10000
-                maxAge: 600000
-                timeBetweenEvictionRunsMillis: 5000
-                minEvictableIdleTimeMillis: 60000
-                validationQuery: SELECT 1
-                validationQueryTimeout: 3
-                validationInterval: 15000
-                testOnBorrow: true
-                testWhileIdle: true
-                testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+            dbCreate: update
+            jndiName: java:comp/env/jdbc/kalliope
+
+# Production is moved into application.groovy so we can make it a little more
+# intelligent
+#    production:
+#        dataSource:
+#            dbCreate: update
+#            url: jdbc:derby:directory:db/kalliope;create=true
+#            properties:
+#                jmxEnabled: true
+#                initialSize: 5
+#                maxActive: 50
+#                minIdle: 5
+#                maxIdle: 25
+#                maxWait: 10000
+#                maxAge: 600000
+#                timeBetweenEvictionRunsMillis: 5000
+#                minEvictableIdleTimeMillis: 60000
+#                validationQuery: SELECT 1
+#                validationQueryTimeout: 3
+#                validationInterval: 15000
+#                testOnBorrow: true
+#                testWhileIdle: true
+#                testOnReturn: false
+#                jdbcInterceptors: ConnectionState
+#                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED

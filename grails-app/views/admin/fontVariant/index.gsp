@@ -64,7 +64,11 @@
 					</table>
 				</div>
 				
-				<bootstrap:paginate total="${fontVariantCount}" params="['font.id': font.id]" />
+				<g:if test="${fontVariantCount > params.max}">
+					<nav aria-label="Font pagination">
+						<bootstrap:paginate total="${fontVariantCount}" params="['font.id': font.id]" />
+					</nav>
+				</g:if>
 			</div>
         </div>
     </body>

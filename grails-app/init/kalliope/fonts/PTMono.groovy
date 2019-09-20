@@ -32,7 +32,7 @@ class PTMono {
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.NORMAL,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/pt-mono/PTMono-Regular.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/pt-mono/PTMono-Regular.ttf").bytes, 
 				originalFilename: "PTMono-Regular.ttf"))
 
 		font.save()

@@ -10,9 +10,9 @@ class FontController {
 	
 	static namespace = "admin"
 
-    FontService fontService
-
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    FontService fontService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -118,7 +118,6 @@ class FontController {
 		}
 		
 		java.awt.Font ttf = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, params.fontVariant.original.inputStream)
-
 		Font font = new Font(name: ttf.family, category: Font.Category.valueOf(params.font.category), transitory: false)
 		
 		font.addToVariants(new FontVariant(

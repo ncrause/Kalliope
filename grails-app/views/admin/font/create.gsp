@@ -42,7 +42,7 @@
 						</fieldset>
 						
 						<fieldset>
-							<button class="btn btn-primary"><g:message code="default.create.label" args="[entityName]" /></button>
+							<button class="btn btn-primary"><g:message code="default.button.create.label" args="[entityName]" /></button>
 						</fieldset>
 					</g:form>
 				</div>

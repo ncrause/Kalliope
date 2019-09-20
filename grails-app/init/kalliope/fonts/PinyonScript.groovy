@@ -32,7 +32,7 @@ class PinyonScript {
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.NORMAL,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/pinyon-script/PinyonScript-Regular.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/pinyon-script/PinyonScript-Regular.ttf").bytes, 
 				originalFilename: "PinyonScript-Regular.ttf"))
 
 		font.save()

@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'font.label', default: 'Font')}" />
-        <title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<g:set var="fontVariants" bean="fontVariantService" />
+		
+        <meta name="layout" content="main" />
+        <title><g:message code="browser.title"/>: <g:message code="default.create.label" args="[entityName]" /></title>
     </head>
-    <body>
-        <a href="#edit-font" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
-        <div id="edit-font" class="content scaffold-edit" role="main">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.font}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.font}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form resource="${this.font}" method="PUT">
-                <g:hiddenField name="version" value="${this.font?.version}" />
-                <fieldset class="form">
-                    <f:all bean="font"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                </fieldset>
-            </g:form>
-        </div>
-    </body>
+	
+	<body>
+		<div class="container-fluid">
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<g:link controller="public" action="index" class="nav-link"><i class="fas fa-home"></i> <g:message code="default.home.label"/></g:link>
+				</li>
+
+				<li class="nav-item">
+					<g:link action="index" class="nav-link"><i class="fas fa-list"></i> <g:message code="default.list.label" args="[entityName]" /></g:link>
+				</li>
+			</ul>
+			
+			<g:hasErrors bean="${font}">
+				<ul class="alert alert-danger">
+					<g:eachError bean="${font}" var="error">
+						<li><g:message error="${error}"/></li>
+					</g:eachError>
+				</ul>
+			</g:hasErrors>
+					
+			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+					
+			<div class="row justify-content-center">
+				<div class="col-md-4">
+					<g:form resource="${font}" method="PUT">
+						<fieldset>
+							<f:all bean="font" order="name, category" />
+						</fieldset>
+						
+						<fieldset>
+							<button class="btn btn-primary"><g:message code="default.button.update.label" args="[entityName]" /></button>
+						</fieldset>
+					</g:form>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

@@ -64,7 +64,7 @@ select, select.form-control {
 a {
 	// add a convenient little icon after the link to indicate how it's
 	// going to open/display
-	&[target="_blank"] {
+	&[target="_blank"]:not(.clean) {
 		&::after {
 			font-size: 0.5em;
 			vertical-align: super;

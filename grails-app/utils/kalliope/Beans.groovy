@@ -39,12 +39,16 @@ import grails.util.Holders
  */
 class Beans {
 	
+	static def getMainContext() {
+		Holders.grailsApplication.mainContext
+	}
+	
 	/**
 	 * Retrieves the names service bean from the Grails Application's main
 	 * context.
 	 */
 	static def get(String name) {
-		Holders.grailsApplication.mainContext.getBean(name)
+		mainContext.getBean(name)
 	}
 	
 	/**

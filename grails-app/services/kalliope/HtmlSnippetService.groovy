@@ -15,27 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package kalliope.fonts
+package kalliope
 
-import kalliope.Font
-import kalliope.FontVariant
+import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
 /**
  *
  * @author Nathan Crause <nathan@crause.name>
  */
-class BreeSerif {
-	
-	void run() {
-		Font font = new Font(name: "Bree Serif", category: Font.Category.SERIF, transitory: false)
-		
-		font.addToVariants(new FontVariant(italic: false,
-				weight: FontVariant.Weight.NORMAL,
-				stretch: FontVariant.Stretch.NORMAL,
-				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/bree-serif/BreeSerif-Regular.ttf").bytes, 
-				originalFilename: "BreeSerif-Regular.ttf"))
+@Service(HtmlSnippet)
+abstract class HtmlSnippetService {
 
-		font.save()
+    abstract HtmlSnippet get(Serializable id)
+
+    abstract List<HtmlSnippet> list(Map args)
+
+    abstract Long count()
+
+	@Transactional
+    abstract void delete(Serializable id)
+
+	@Transactional
+    abstract HtmlSnippet save(HtmlSnippet record)
+	
+	List<HtmlSnippet> listByLocationOrderedByPosition(HtmlSnippet.Location targetLocation) {
+		HtmlSnippet.where {
+			location == targetLocation
+		}.list(sort: "position", order: "asc")
 	}
 	
 }

@@ -96,3 +96,11 @@ assets {
 	minifyJs = true
 	minifyCss = true
 }
+
+war {
+	archiveName 'kalliope.war'
+//	from('fixtures') {
+//		include '**/*'
+//		into 'fixtures'
+//	}
+}

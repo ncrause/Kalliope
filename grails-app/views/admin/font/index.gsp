@@ -71,13 +71,12 @@
 					</table>
 				</div>
 				
-				<%-- TODO: what do we need to pass during pagination? --%>
 				<g:if test="${fontCount > params.max}">
 					<nav aria-label="Font pagination">
-						<g:bsPaginate />
+						<bootstrap:paginate total="${fontCount}" />
 					</nav>
 				</g:if>
-				<bootstrap:paginate total="${fontCount}" />
+				
 			</div>
 		</div>
     </body>

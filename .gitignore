@@ -12,3 +12,4 @@ out/
 .classpath
 /db/
 *.log
+/.asscache

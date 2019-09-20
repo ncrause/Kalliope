@@ -41,22 +41,27 @@ abstract class FontVariantService {
 	 * @param baseURL the URL which contains the controller + action which will
 	 * be returned to handle retrieval of the font
 	 */
-	String getFontFace(FontVariant variant) {
+	String getFontFace(FontVariant variant, boolean remote) {
 		String baseURL = Beans.grailsLinkGenerator.link(controller: "public", action: "get")
+		String pathBase = remote ? "${baseURL}/${variant.id}" : fileBasename(variant)
 		
 		return """
 @font-face {
 	font-family: "${variant.font.name}";
-	src: url("${baseURL}/${variant.id}.eot");
+	src: url("${pathBase}.eot");
 	src: local("☺"),
-		url("${baseURL}/${variant.id}.woff") format("woff"),
-		url("${baseURL}/${variant.id}.ttf") format("truetype"),
-		url("${baseURL}/${variant.id}.svg") format("svg");
+		url("${pathBase}.woff") format("woff"),
+		url("${pathBase}.ttf") format("truetype"),
+		url("${pathBase}.svg") format("svg");
 	font-weight: ${variant.weight.number()};
 	font-style: ${variant.italic ? "italic" : "normal"};
 	font-stretch: ${variant.stretch.cssKeyword()};
 }
 		"""
+	}
+	
+	String getFontFace(FontVariant variant) {
+		getFontFace(variant, true)
 	}
 	
 	void convertFont(FontVariant variant) {
@@ -161,6 +166,10 @@ abstract class FontVariantService {
 		}
 		
 		return file
+	}
+	
+	String fileBasename(FontVariant fontVariant) {
+		return Beans.sanitizeService.sanitizeWithDashes(fontVariant as String)
 	}
 	
 }

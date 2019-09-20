@@ -33,48 +33,48 @@ class EncodeSans {
 		// ----------------------------------------------------------------
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.THIN,
-				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-Thin.ttf").bytes, 
+				stretch: FontVariant.Stretch.NORMAL, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-Thin.ttf").bytes,
 				originalFilename: "EncodeSans-Thin.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.EXTRA_LIGHT,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-ExtraLight.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-ExtraLight.ttf").bytes, 
 				originalFilename: "EncodeSans-ExtraLight.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.LIGHT,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-Light.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-Light.ttf").bytes, 
 				originalFilename: "EncodeSans-Light.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.NORMAL,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-Regular.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-Regular.ttf").bytes, 
 				originalFilename: "EncodeSans-Regular.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.MEDIUM,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-Medium.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-Medium.ttf").bytes, 
 				originalFilename: "EncodeSans-Medium.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.SEMI_BOLD,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-SemiBold.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-SemiBold.ttf").bytes, 
 				originalFilename: "EncodeSans-SemiBold.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.BOLD,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-Bold.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-Bold.ttf").bytes, 
 				originalFilename: "EncodeSans-Bold.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.EXTRA_BOLD,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-ExtraBold.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-ExtraBold.ttf").bytes, 
 				originalFilename: "EncodeSans-ExtraBold.ttf"))
 		font.addToVariants(new FontVariant(italic: false,
 				weight: FontVariant.Weight.BLACK,
 				stretch: FontVariant.Stretch.NORMAL,
-				original: new File("fixtures/assets/fonts/encode-sans/EncodeSans-Black.ttf").bytes, 
+				original: getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/EncodeSans-Black.ttf").bytes, 
 				originalFilename: "EncodeSans-Black.ttf"))
 		// ----------------------------------------------------------------
 		// Stretches
@@ -94,12 +94,13 @@ class EncodeSans {
 					"Bold": FontVariant.Weight.BOLD,
 					"Black": FontVariant.Weight.BLACK].each { weight ->
 				String filename = "EncodeSans${stretch.key}-${weight.key}.ttf"
-				File file = new File("fixtures/assets/fonts/encode-sans/${filename}")
+				URL resource = getClass().getClassLoader().getResource("fixtures/assets/fonts/encode-sans/${filename}")
 
-				if (file.exists()) {
+//				if (resource.exists()) {
+				if (resource) {
 					font.addToVariants(new FontVariant(italic: false,
 							weight: weight.value, stretch: stretch.value,
-							original: file.bytes, originalFilename: filename))
+							original: resource.bytes, originalFilename: filename))
 				}
 			}
 		}

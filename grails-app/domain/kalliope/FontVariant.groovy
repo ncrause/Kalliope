@@ -92,20 +92,20 @@ class FontVariant {
 	Date lastUpdated
 	
 	static constraints = {
-//		original maxSize: 1024 * 1024 * 1024
-//		ttf maxSize: 1024 * 1024 * 1024
-//		eot maxSize: 1024 * 1024 * 1024
-//		woff maxSize: 1024 * 1024 * 1024
-//		svg maxSize: 1024 * 1024 * 1024
+		original(maxSize: 1024 * 1024 * 1024)
+		ttf(maxSize: 1024 * 1024 * 1024)
+		eot(maxSize: 1024 * 1024 * 1024)
+		woff(maxSize: 1024 * 1024 * 1024)
+		svg(maxSize: 1024 * 1024 * 1024)
 	}
 	
 	static mapping = {
 		table(name: "font_variants")
-		original(sqlType: "blob")
-		ttf(sqlType: "blob")
-		eot(sqlType: "blob")
-		woff(sqlType: "blob")
-		svg(sqlType: "blob")
+//		original(sqlType: "blob")
+//		ttf(sqlType: "blob")
+//		eot(sqlType: "blob")
+//		woff(sqlType: "blob")
+//		svg(sqlType: "blob")
 	}
 	
 	static transients = ["fontsConverted"]
