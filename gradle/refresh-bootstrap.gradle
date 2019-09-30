@@ -1,0 +1,79 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+}
+
+ext {
+    bootstrapDir = new File("${project.projectDir}/grails-app/assets/stylesheets/bootstrap")
+    bootswatchDir = new File("${project.projectDir}/grails-app/assets/stylesheets/bootswatch")
+    timeNow = new Date().format('yyyyMMddHHmmss')
+    tmpDir = System.getProperty('java.io.tmpdir') + "${project.name}/${timeNow}"
+}
+
+task cleanBootstrap {
+    group "Bootstrap HTML framework"
+    description "Cleans out (empties) the bootstrap and bootswatch assets directories"
+    
+    doLast {
+        println "Cleaning out current Boostrap and Bootswatch directories"
+        
+//        exec {
+//            workingDir project.projectDir
+//        }
+        if (bootstrapDir.exists()) {
+            delete {
+                delete bootstrapDir.absolutePath
+            }
+        }
+        else {
+            println "\tNo Bootstrap directory located (${bootstrapDir.absolutePath})"
+        }
+        
+        if (bootswatchDir.exists()) {
+            delete {
+                delete bootswatchDir.absolutePath
+            }
+        }
+        else {
+            println "\tNo Bootswatch directory located (${bootswatchDir.absolutePath})"
+        }
+    }
+}
+
+task refreshBootstrap {
+    group "Bootstrap HTML framework"
+    description "Downloads the latest versions of Bootstrap and Bootswatch"
+    
+    doLast {
+        println "Getting Bootstrap (cloning into tmp: ${tmpDir}/bootstrap)"
+        
+        bootstrapDir.mkdir()
+        
+        exec {
+            commandLine "git", "clone", "https://github.com/twbs/bootstrap.git", "${tmpDir}/bootstrap"
+        }
+        
+        copy {
+            from "${tmpDir}/bootstrap/scss"
+            into bootstrapDir.absolutePath
+        }
+        
+        println "Getting Bootswatch (cloning into tmp: ${tmpDir}/bootswatch)"
+        
+        bootswatchDir.mkdir()
+        
+        exec {
+            commandLine "git", "clone", "https://github.com/thomaspark/bootswatch.git", "${tmpDir}/bootswatch"
+        }
+        
+        copy {
+            from("${tmpDir}/bootswatch/dist") {
+                exclude "**/bootstrap.css", "**/bootstrap.min.css"
+            }
+            into bootswatchDir.absolutePath
+        }
+    }
+}
+
+refreshBootstrap.dependsOn cleanBootstrap

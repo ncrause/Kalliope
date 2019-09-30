@@ -1,0 +1,1 @@
+<g:field name="${prefix}${property}" value="${value}" required="${required}" type="file" class="form-control" />
