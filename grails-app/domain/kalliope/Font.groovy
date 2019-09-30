@@ -1,75 +1,77 @@
+/*
+ * Copyright (C) 2019 Nathan Crause
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package kalliope
 
 class Font {
 	
+	enum Category {
+		SERIF("serif"), SANS_SERIF("sans-serif"), MONOSPACE("monospace"), 
+		CURSIVE("cursive"), FANTASY("fantasy")
+		
+		/**
+		 * Holds the value of the CSS "failover" generic font-face to use
+		 */
+		private String failoverFontFace
+		
+		Category(failoverFontFace) {
+			this.failoverFontFace = failoverFontFace
+		}
+		
+		String failoverFontFace() {
+			return failoverFontFace
+		}
+	}
+	
 	String name
+	
+	Category category
 	
 	static hasMany = [variants: FontVariant]
 	
 	Date dateCreated
 	
 	Date lastUpdated
+	
+	/**
+	 * Since this font server can have a "permanent" library of re-usable fonts,
+	 * as well as provide a "quick" conversion utility, this fields defines if
+	 * the font is actually just "transitory" (short-lived)
+	 */
+	boolean transitory = true
 
     static constraints = {
-		name blank: false
+		name(blank: false)
     }
 	
 	static mapping = {
-		table name: 'fonts', schema: 'public'
+		table(name: "fonts")
 	}
 	
 	String toString() {
 		return name
 	}
 	
-	/**
-	 * Generates CSS @font-face declaration, including all the variants
-	 * 
-	 * @param baseURL the URL which contains the controller + action which will
-	 * be returned to handle retrieval of the font
-	 */
-	String getFontFace(String baseURL = '/publicAccess/font/get') {
-		def builder = StringBuilder.newInstance()
-		
-		for (variant in variants) {
-			builder << variant.getFontFace(baseURL) << "\r\n"
+	void beforeValidate() {
+		// remove all single quotes, as they will interfere with inserting
+		// the font's name into CSS
+		if (name) {
+			name = name.replaceAll("'", "")
 		}
-		
-		return builder.toString()
-	}
-	
-	String getFontFaceInline() {
-//		println '-----'
-//		println variants
-//		print FontVariant.list()
-//		println '-----'
-		def builder = StringBuilder.newInstance()
-		
-		for (variant in variants) {
-			builder << variant.fontFaceInline << "\r\n"
-		}
-		
-		return builder as String
-	}
-	
-	FontVariant getVariant(FontVariant.Weight weight, FontVariant.Stretch stretch, boolean italic) {
-		variants.find { it.weight == weight && it.stretch == stretch &&  it.italic == italic }
-	}
-	
-	FontVariant getNormal() {
-		getVariant(FontVariant.Weight.NORMAL, FontVariant.Stretch.NORMAL, false)
-	}
-	
-	FontVariant getItalic() {
-		getVariant(FontVariant.Weight.NORMAL, FontVariant.Stretch.NORMAL, true)
-	}
-	
-	FontVariant getBold() {
-		getVariant(FontVariant.Weight.BOLD, FontVariant.Stretch.NORMAL, false)
-	}
-	
-	FontVariant getBoldItalic() {
-		getVariant(FontVariant.Weight.BOLD, FontVariant.Stretch.NORMAL, true)
 	}
 	
 }
