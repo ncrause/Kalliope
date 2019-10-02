@@ -92,7 +92,7 @@ abstract class FontVariantService {
 		
 		// TODO: once the TODO in getScriptFile() is completed, pass in arguments
 		// to control which conversions are to actually be done
-		ProcessBuilder processBuilder = new ProcessBuilder("fontforge", "-script", script.absolutePath, tmp.absolutePath)
+		ProcessBuilder processBuilder = new ProcessBuilder(locateFontforgeExecutable(), "-script", script.absolutePath, tmp.absolutePath)
 		Process process = processBuilder.start()
 		StringBuffer stdOut = new StringBuffer()
 		StringBuffer stdErr = new StringBuffer()
@@ -126,6 +126,36 @@ abstract class FontVariantService {
 	
 	Map convertFont(byte[] source, String originalFilename) {
 		return convertFont(source, originalFilename, true, true, true, true)
+	}
+	
+	/**
+	 * The below is the list of directories that will be checked for the
+	 * fontforge binary file. This list was determined based on the location
+	 * into which it is installed on Ubuntu, FreeBSD and MacOS X
+	 */
+	private static String[] FONTFORGE_DIRECTORIES = [
+		"/usr/local/bin",
+		"/usr/bin"
+	]
+	
+	private String fontforgeExecutable
+	
+	private String locateFontforgeExecutable() {
+		if (fontforgeExecutable) {
+			return fontforgeExecutable
+		}
+		
+		// if we don't have it set as yet, try to find it!
+		for (String dir in FONTFORGE_DIRECTORIES) {
+			File test = new File(dir, "fontforge")
+			
+			if (test.exists() && test.canExecute()) {
+				return (fontforgeExecutable = test.absolutePath)
+			}
+		}
+		
+		// if it wasn't found at all, throw an exception
+		throw new FileNotFoundException("Unable to locate the 'fontforge' executable")
 	}
 	
 	private byte[] readFontFile(filename) {
