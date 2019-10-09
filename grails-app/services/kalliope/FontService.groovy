@@ -114,7 +114,7 @@ abstract class FontService {
 		Date startDay = calendar.getTime()
 
 		Font.where {
-			dateCreated in startOfDay..endOfDay
+			dateCreated in startDay..endDay
 		}.count() ?: intramonthCount
 	}
 	
@@ -127,7 +127,7 @@ abstract class FontService {
 		Date startDay = calendar.getTime()
 
 		Font.where {
-			dateCreated in startOfDay..endOfDay
+			dateCreated in startDay..endDay
 		}.count()
 	}
 	
