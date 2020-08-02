@@ -57,12 +57,15 @@
 
 				<div class="collapse navbar-collapse" id="main-menu-contents">
 					<ul class="navbar-nav mr-auto">
-					</ul>
-					
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item">
-							<a class="nav-link" href="${createLink(namespace: "admin", controller: "font", action: "index")}"><g:message code="navbar.admin.label"/></a>
-						</li>
+						<g:if test="${session.user}">
+							<li class="nav-item">
+								<a class="nav-link" href="${createLink(namespace: "admin", controller: "font", action: "index")}"><g:message code="navbar.fonts.label"/></a>
+							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="${createLink(namespace: "admin", controller: "user", action: "index")}"><g:message code="navbar.users.label"/></a>
+							</li>
+						</g:if>
 					</ul>
 				</div>
 			</nav>

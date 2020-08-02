@@ -5,28 +5,32 @@ import kalliope.fonts.*
 class BootStrap {
 
     Closure init = { servletContext ->
-		// make sure we have at least Encode Sans, which is a nice free font
-		// which has multiple "stretch" types (apparently the only one which
-		// does).
-		if (!Font.findByName("Encode Sans")) {
-			new EncodeSans().run()
+		environments {
+			production {
+				// make sure we have at least Encode Sans, which is a nice free font
+				// which has multiple "stretch" types (apparently the only one which
+				// does).
+				if (!Font.findByName("Encode Sans")) {
+					new EncodeSans().run()
+				}
+			}
 		}
 		
 		// Ubuntu font has combination of weight + italic
 		if (!Font.findByName("Ubuntu")) {
 			new Ubuntu().run()
 		}
-		
+
 		// Simple serif font with no variants
 		if (!Font.findByName("Bree Serif")) {
 			new BreeSerif().run()
 		}
-		
+
 		// Simple monospace font with no variants
 		if (!Font.findByName("PT Mono")) {
 			new PTMono().run()
 		}
-		
+
 		// Simple cursive font with no variants
 		if (!Font.findByName("Pinyon Script")) {
 			new PinyonScript().run()
