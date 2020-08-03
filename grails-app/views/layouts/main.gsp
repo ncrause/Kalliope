@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" import="kalliope.PageLocation" %>
+<g:set var="htmlSnippets" bean="htmlSnippetService"/>
 <!doctype html>
 <html lang="en">
 	<head>
@@ -37,12 +38,28 @@
 		<title><g:layoutTitle default="${g.message(code: "browser.title")}"/></title>
 
 		<g:layoutHead/>
+		
+		<g:if test="${!session.user}">
+			<!-- Begin HEAD snippets -->
+			<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.HEAD)}">
+				${htmlSnippet.content}
+			</g:each>
+			<!-- End HEAD snippets -->
+		</g:if>
 	</head>
 
 	<body itemscope itemtype="https://schema.org/WebApplication">
 		<meta itemprop="browserRequirements" content="HTML5+CSS3" />
 		<meta itemprop="applicationCategory" content="Font, Conversion" />
 		<meta itemprop="operatingSystem" content="Any GUI-enabled operating system with an HTML5 capable browser." />
+		
+		<g:if test="${!session.user}">
+			<!-- Begin BODY_OPEN snippets -->
+			<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.BODY_OPEN)}">
+				${htmlSnippet.content}
+			</g:each>
+			<!-- End BODY_OPEN snippets -->
+		</g:if>
 		
 		<header id="site-header">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -65,22 +82,58 @@
 							<li class="nav-item">
 								<a class="nav-link" href="${createLink(namespace: "admin", controller: "user", action: "index")}"><g:message code="navbar.users.label"/></a>
 							</li>
+							
+							<li class="nav-item">
+								<a class="nav-link" href="${createLink(namespace: "admin", controller: "html-snippets", action: "index")}"><g:message code="navbar.html_snippets.label"/></a>
+							</li>
 						</g:if>
 					</ul>
 				</div>
 			</nav>
+			
+			<g:if test="${!session.user}">
+				<!-- Begin HEADER snippets -->
+				<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.HEADER)}">
+					${htmlSnippet.content}
+				</g:each>
+				<!-- End HEADER snippets -->
+			</g:if>
 		</header>
 		
 		<main id="site-content" class="my-4">
-			<section class="container-fluid">
+			<section class="container-fluid" role="alerts">
 				<g:each var="flashType" in="${[message: "info", success: "success", warning: "warning", error: "danger"]}">
 					<g:if test="${flash[flashType.key]}">
 						<div class="alert alert-${flashType.value} mb-4" role="alert">${flash[flashType.key]}</div>
 					</g:if>
 				</g:each>
 			</section>
+		
 
-			<g:layoutBody />
+			<section class="container-fluid">
+				<div class="row">
+					<g:if test="${!session.user}">
+						<g:if test="${htmlSnippets.locationExists(PageLocation.LEFT)}">
+							<aside class="col-md-4">
+							</aside>
+						</g:if>
+
+						<div class="col-md-${htmlSnippets.getBodyColumnWidth()}">
+							<g:layoutBody />
+						</div>
+
+						<g:if test="${htmlSnippets.locationExists(PageLocation.RIGHT)}">
+							<aside class="col-md-4">
+							</aside>
+						</g:if>
+					</g:if>
+					<g:else>
+						<div class="col-md-12">
+							<g:layoutBody />
+						</div>
+					</g:else>
+				</div>
+			</section>
 		</main>
 		
 		<footer id="site-footer" class="container-fluid bg-light py-4 border-top text-center">
@@ -171,10 +224,26 @@
 					</div>
 				</div>
 			</div>
+			
+			<g:if test="${!session.user}">
+				<!-- Begin FOOTER snippets -->
+				<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.FOOTER)}">
+					${htmlSnippet.content}
+				</g:each>
+				<!-- End FOOTER snippets -->
+			</g:if>
 		</footer>
 		
 		<div id="spinner">
 			<i class="fas fa-spinner fa-spin fa-5x fa-fw"></i>
 		</div>
+			
+		<g:if test="${!session.user}">
+			<!-- Begin BODY_CLOSE snippets -->
+			<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.BODY_CLOSE)}">
+				${htmlSnippet.content}
+			</g:each>
+			<!-- End BODY_CLOSE snippets -->
+		</g:if>
 	</body>
 </html>

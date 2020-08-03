@@ -30,7 +30,6 @@ class UserController {
         try {
 			user.password = params.password
 			++user.passwordVersion
-			System.out.println("********** is user dirty? ${user.isDirty()}")
 			
             userService.save(user)
         } catch (ValidationException e) {

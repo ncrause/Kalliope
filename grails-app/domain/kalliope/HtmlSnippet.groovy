@@ -25,48 +25,17 @@ package kalliope
  */
 class HtmlSnippet {
 	
-	enum Location {
-		/**
-		 * Within the &lt;head&gt; element
-		 */
-		HEAD,
-		/**
-		 * Immediately after the opening &lt;body&gt; tag
-		 */
-		BODY_OPEN, 
-		/**
-		 * Immediately before the closing &lt;/body&gt; tag
-		 */
-		BODY_CLOSE,
-		/**
-		 * The generally defined "header" area of the visible site
-		 */
-		HEADER,
-		/**
-		 * The generally defined "footer" area of the visible site
-		 */
-		FOOTER,
-		/**
-		 * Within the main content area, the left-most "sidebar"
-		 */
-		LEFT,
-		/**
-		 * Within the main content area, the right-most "sidebar"
-		 */
-		RIGHT
-	}
-	
 	/**
 	 * The general area on the layout
 	 */
-	Location location
+	PageLocation location
 	
 	/**
 	 * Since more than one item can be defined in a given location, this is
 	 * the general "position" (sequence / order) in which the HTML snippets
 	 * should be rendered
 	 */
-	int position = 1
+	Integer position
 	
 	String content
 	
