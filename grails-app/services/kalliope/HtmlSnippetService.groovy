@@ -71,7 +71,7 @@ abstract class HtmlSnippetService {
 	 * potential presence of left and right snippets.
 	 */
 	int getBodyColumnWidth() {
-		12 - (locationExists(PageLocation.LEFT) ? 4 : 0) - (locationExists(PageLocation.RIGHT) ? 4 : 0)
+		12 - (locationExists(PageLocation.LEFT) ? 3 : 0) - (locationExists(PageLocation.RIGHT) ? 3 : 0)
 	}
 	
 }

@@ -56,7 +56,7 @@
 		<g:if test="${!session.user}">
 			<!-- Begin BODY_OPEN snippets -->
 			<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.BODY_OPEN)}">
-				${htmlSnippet.content}
+				${raw(htmlSnippet.content)}
 			</g:each>
 			<!-- End BODY_OPEN snippets -->
 		</g:if>
@@ -84,10 +84,18 @@
 							</li>
 							
 							<li class="nav-item">
-								<a class="nav-link" href="${createLink(namespace: "admin", controller: "html-snippets", action: "index")}"><g:message code="navbar.html_snippets.label"/></a>
+								<a class="nav-link" href="${createLink(namespace: "admin", controller: "html-snippet", action: "index")}"><g:message code="navbar.html_snippets.label"/></a>
 							</li>
 						</g:if>
 					</ul>
+					
+					<g:if test="${session.user}">
+						<ul class="navbar-nav ml-auto">
+							<li class="nav-item">
+								<g:link namespace="admin" controller="session" action="logout" class="nav-link"><i class="fas fa-sign-out-alt"></i></g:link>
+							</li>
+						</ul>
+					</g:if>
 				</div>
 			</nav>
 			
@@ -114,7 +122,12 @@
 				<div class="row">
 					<g:if test="${!session.user}">
 						<g:if test="${htmlSnippets.locationExists(PageLocation.LEFT)}">
-							<aside class="col-md-4">
+							<aside class="col-md-3">
+								<!-- Begin HEADER snippets -->
+								<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.LEFT)}">
+									${raw(htmlSnippet.content)}
+								</g:each>
+								<!-- End HEADER snippets -->
 							</aside>
 						</g:if>
 
@@ -123,7 +136,12 @@
 						</div>
 
 						<g:if test="${htmlSnippets.locationExists(PageLocation.RIGHT)}">
-							<aside class="col-md-4">
+							<aside class="col-md-3">
+								<!-- Begin HEADER snippets -->
+								<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.RIGHT)}">
+									${raw(htmlSnippet.content)}
+								</g:each>
+								<!-- End HEADER snippets -->
 							</aside>
 						</g:if>
 					</g:if>
@@ -241,7 +259,7 @@
 		<g:if test="${!session.user}">
 			<!-- Begin BODY_CLOSE snippets -->
 			<g:each var="htmlSnippet" in="${htmlSnippets.listByLocationOrderedByPosition(PageLocation.BODY_CLOSE)}">
-				${htmlSnippet.content}
+				${raw(htmlSnippet.content)}
 			</g:each>
 			<!-- End BODY_CLOSE snippets -->
 		</g:if>

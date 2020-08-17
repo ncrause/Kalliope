@@ -39,10 +39,17 @@ class HtmlSnippet {
 	
 	String content
 	
+	String description
+	
+	Date dateCreated
+	
+	Date lastUpdated
+	
 	static constraints = {
 		location(nullable: false)
 		position(nullable: false, min: 1, unique: "location")
 		content(nullable: false, blank: false, maxSize: 4096)
+		description(nullable: false, blank: false, maxSize: 256)
 	}
 	
 	static mapping = {
