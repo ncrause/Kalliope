@@ -87,6 +87,41 @@ class FontVariant {
 	
 	byte[] svg
 	
+	/**
+	 * As retrieved from FontMetrics#getMaxAscent()
+	 */
+	Integer maxAscent
+	
+	/**
+	 * As retrieved from FontMetrics#getMaxDescent()
+	 */
+	Integer maxDescent
+	
+	/**
+	 * As retrieved from FontMetrics#getLeading()
+	 */
+	Integer leading
+	
+	/**
+	 * As retrieved from FontMetrics#getMaxAdvance()
+	 */
+	Integer maxAdvance
+	
+	/**
+	 * As specified in the admin
+	 */
+	Double angle
+	
+	/**
+	 * As specified in the admin
+	 */
+	Integer width
+	
+	/**
+	 * As retrieved from Font#getSize2D()
+	 */
+	Double pointSize
+	
 	Date dateCreated
 	
 	Date lastUpdated
@@ -97,6 +132,13 @@ class FontVariant {
 		eot(maxSize: 1024 * 1024 * 1024)
 		woff(maxSize: 1024 * 1024 * 1024)
 		svg(maxSize: 1024 * 1024 * 1024)
+		maxAscent(nullable: true)
+		maxDescent(nullable: true)
+		leading(nullable: true)
+		maxAdvance(nullable: true)
+		angle(nullable: true)
+		width(nullable: true)
+		pointSize(nullable: true)
 	}
 	
 	static mapping = {

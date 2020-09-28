@@ -50,9 +50,51 @@
 				</div>
 			</div> --%>
 			<f:with bean="fontVariant">
-				<f:display property="font.name" theme="horizontal" />
-				<f:display property="weight" theme="horizontal" />
-				<f:display property="stretch" theme="horizontal" />
+				<%-- <f:display property="font.name" /> --%>
+				<f:display property="font.name" />
+				
+				<div class="row">
+					<div class="col-md-6">
+						<f:display property="weight" />
+					</div>
+					
+					<div class="col-md-6">
+						<f:display property="stretch" />
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<f:display property="maxAscent" theme="addon" addonText="px" />
+					</div>
+					
+					<div class="col-md-3">
+						<f:display property="maxDescent" theme="addon" addonText="px" />
+					</div>
+					
+					<div class="col-md-3">
+						<f:display property="leading" theme="addon" addonText="px" />
+					</div>
+					
+					<div class="col-md-3">
+						<f:display property="maxAdvance" theme="addon" addonText="px" />
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-3">
+						<f:display property="angle" theme="addon" addonText="°" />
+					</div>
+					
+					<div class="col-md-3">
+						<f:display property="width" theme="addon" addonText="px" />
+					</div>
+					
+					<div class="col-md-3">
+						<f:display property="pointSize" theme="addon" addonText="pt" />
+					</div>
+				</div>
+				
 				<f:display property="italic" theme="horizontal" />
 			</f:with>
 			
