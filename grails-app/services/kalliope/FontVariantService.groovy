@@ -25,6 +25,7 @@ import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
 import java.awt.Font as AWTFont
+import kalliope.utils.Values
 
 @Service(FontVariant)
 abstract class FontVariantService {
@@ -230,6 +231,59 @@ abstract class FontVariantService {
 	
 	String fileBasename(FontVariant fontVariant) {
 		return Beans.sanitizeService.sanitizeWithDashes(fontVariant as String)
+	}
+
+	List<FontVariant> search(Map args) {
+		FontVariant.withCriteria {
+			if (args.containsKey("category") && !Values.isBlank(args.category)) {
+				Font.Category category = args.category instanceof String ? Font.Category.valueOf(args.category) : args.category
+				
+				font {
+					eq("category", category)
+				}
+			}
+			
+			if (args.containsKey("weight") && !Values.isBlank(args.weight)) {
+				FontVariant.Weight weight = args.weight instanceof String ? FontVariant.Weight.valueOf(args.weight) : args.weight
+				
+				eq("weight", weight)
+			}
+			
+			if (args.containsKey("stretch") && !Values.isBlank(args.stretch)) {
+				FontVariant.Stretch stretch = args.stretch instanceof String ? FontVariant.Stretch.valueOf(args.stretch) : args.stretch
+				
+				eq("stretch", stretch)
+			}
+			
+			if (args.containsKey("italic") && !Values.isBlank(args.italic)) {
+				eq("italic", args.italic)
+			}
+			
+			if (args.containsKey("advance") && !Values.isBlank(args.advance)) {
+				double advance = args.advance as Double
+				
+				// whatever width/advance we're looking for, create a 10% envelope around it
+				between("maxAdvance", Math.round(advance / 1.1) as Integer, Math.round(advance * 1.1) as Integer)
+			}
+			
+			font {
+				order("name")
+			}
+			order("italic")
+		}
+	}
+	
+	int[] advanceLimits() {
+		FontVariant.withCriteria(uniqueResult: true) {
+			font {
+				eq("transitory", false)
+			}
+			
+			projections {
+				min("maxAdvance")
+				max("maxAdvance")
+			}
+		}
 	}
 	
 }
