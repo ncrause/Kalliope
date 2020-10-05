@@ -52,6 +52,7 @@
 					<thead>
 						<tr>
 							<g:sortableColumn namespace="admin" property="name" title="Name" />
+							<th>Slug</th>
 							<th>Category</th>
 							<th>Variants</th>
 						</tr>
@@ -60,14 +61,32 @@
 					<tbody>
 						<g:each in="${fontList}" var="font">
 							<tr>
-								<td class="text-nowrap"><g:link action="show" id="${font.ident()}">${font.name}</g:link></td>
-								<td class="text-nowrap">${font.category.failoverFontFace()}</td>
-								<td><g:render template="/shared/fontVariants" model="[font: font]"/>
-								</td>
+								<g:sortableColumn namespace="admin" property="name" title="Name" />
+								<th>Slug</th>
+								<th>Category</th>
+								<th>Variants</th>
 							</tr>
-						</g:each>
-					</tbody>
-				</table>
+						</thead>
+						
+						<tbody>
+							<g:each in="${fontList}" var="font">
+								<tr>
+									<td class="text-nowrap"><g:link action="show" id="${font.ident()}">${font.name}</g:link></td>
+									<td class="text-nowrap">${font.slug}</td>
+									<td class="text-nowrap">${font.category.failoverFontFace()}</td>
+									<td><g:render template="/shared/fontVariants" model="[font: font]"/>
+									</td>
+								</tr>
+							</g:each>
+						</tbody>
+					</table>
+				</div>
+				
+				<g:if test="${fontCount > params.max}">
+					<nav aria-label="Font pagination">
+						<bootstrap:paginate total="${fontCount}" />
+					</nav>
+				</g:if>
 			</div>
 
 			<g:if test="${fontCount > params.max}">
