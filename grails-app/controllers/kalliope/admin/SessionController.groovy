@@ -32,4 +32,12 @@ class SessionController {
         }
 	}
 	
+	def logout() {
+		session.invalidate();
+		
+		flash.success = "Successfully logged out"
+		
+		redirect(action: "index")
+	}
+	
 }

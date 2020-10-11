@@ -25,6 +25,9 @@ class User {
 	
 	String passwordDigest
 	
+	// this is really just to force a dirty state during password edits
+	int passwordVersion = 0
+	
 	Date dateCreated
 	
 	Date lastUpdated
@@ -32,7 +35,7 @@ class User {
 	static transients = ['password']
 
     static constraints = {
-		name(blank: false, maxSize: 255)
+		name(blank: false, maxSize: 255, matches: "\\w+")
 		passwordDigest(blank: false)
     }
 	
@@ -45,9 +48,20 @@ class User {
 		// if there's a password, digest it!
 		if (password) {
 			passwordDigest = Digester.sha512(password)
-			// make sure to clear out the plaintext password ASAP
-			password = null
 		}
+	}
+	
+	def afterInsert() {
+		afterSave()
+	}
+	
+	def afterUpdate() {
+		afterSave()
+	}
+	
+	def afterSave() {
+		// make sure to clear out the plaintext password ASAP
+		password = null
 	}
 	
 }

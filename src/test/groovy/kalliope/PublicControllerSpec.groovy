@@ -1,6 +1,7 @@
 package kalliope
 
 import grails.testing.web.controllers.ControllerUnitTest
+import groovy.transform.NotYetImplemented
 import spock.lang.Specification
 
 class PublicControllerSpec extends Specification implements ControllerUnitTest<PublicController> {
@@ -11,8 +12,7 @@ class PublicControllerSpec extends Specification implements ControllerUnitTest<P
     def cleanup() {
     }
 
+	@NotYetImplemented
     void "test something"() {
-        expect:"fix me"
-            true == false
     }
 }

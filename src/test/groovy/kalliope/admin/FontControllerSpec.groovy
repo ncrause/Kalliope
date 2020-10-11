@@ -46,7 +46,7 @@ class FontControllerSpec extends Specification implements ControllerUnitTest<Fon
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/admin/font/index'
+        response.redirectedUrl == '/admin'
         flash.message != null
     }
 
@@ -150,7 +150,7 @@ class FontControllerSpec extends Specification implements ControllerUnitTest<Fon
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/admin/font/index'
+        response.redirectedUrl == '/admin'
         flash.message != null
     }
 
@@ -200,7 +200,7 @@ class FontControllerSpec extends Specification implements ControllerUnitTest<Fon
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/admin/font/index'
+        response.redirectedUrl == '/admin'
         flash.message != null
     }
 
@@ -216,7 +216,7 @@ class FontControllerSpec extends Specification implements ControllerUnitTest<Fon
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/admin/font/index'
+        response.redirectedUrl == '/admin'
         flash.message != null
     }
 }

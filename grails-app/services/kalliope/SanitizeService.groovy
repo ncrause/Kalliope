@@ -83,7 +83,7 @@ class SanitizeService {
 	 */
 	private String removeAccents(String  text) {
 		Normalizer.normalize(text, Normalizer.Form.NFD)
-		.replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+				.replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
 	}
 	
 }

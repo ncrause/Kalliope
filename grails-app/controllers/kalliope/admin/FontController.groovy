@@ -109,6 +109,11 @@ class FontController {
 		respond(new Font(params.font), model: [fontVariant: new FontVariant(params.fontVariant ?: [weight: FontVariant.Weight.NORMAL, stretch: FontVariant.Stretch.NORMAL])])
 	}
 	
+	/**
+	 * TODO: if we decide to store metrics of the font in the DB, look
+	 * at https://stackoverflow.com/questions/2843601/java-fontmetrics-without-graphics/18123024
+	 * specifically the answer involving "Canvas"
+	 */
 	def build() {
 		String extension = org.apache.commons.io.FilenameUtils.getExtension(params.fontVariant.original.originalFilename)
 		

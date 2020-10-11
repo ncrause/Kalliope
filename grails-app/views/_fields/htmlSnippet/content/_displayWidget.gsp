@@ -1,0 +1,1 @@
+<pre><code id="${prefix}${property}" class="html">${value}</code></pre>
