@@ -148,6 +148,8 @@ class FontVariant {
 //		eot(sqlType: "blob")
 //		woff(sqlType: "blob")
 //		svg(sqlType: "blob")
+		// "leading" seems to cause a problems in PostgreSQL, so we need a bigger name
+		leading(column: "leading_space")
 	}
 	
 	static transients = ["fontsConverted"]

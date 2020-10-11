@@ -5,15 +5,11 @@ import kalliope.fonts.*
 class BootStrap {
 
     Closure init = { servletContext ->
-		environments {
-			production {
-				// make sure we have at least Encode Sans, which is a nice free font
-				// which has multiple "stretch" types (apparently the only one which
-				// does).
-				if (!Font.findByName("Encode Sans")) {
-					new EncodeSans().run()
-				}
-			}
+		// make sure we have at least Encode Sans, which is a nice free font
+		// which has multiple "stretch" types (apparently the only one which
+		// does).
+		if (!Font.findByName("Encode Sans")) {
+			new EncodeSans().run()
 		}
 		
 		// Ubuntu font has combination of weight + italic
