@@ -19,6 +19,13 @@ package kalliope
 
 import grails.gorm.services.Service
 import grails.gorm.transactions.Transactional
+import java.awt.Canvas
+import java.awt.FontMetrics
+import java.awt.Graphics2D
+import java.awt.image.BufferedImage
+
+import java.awt.Font as AWTFont
+import kalliope.utils.Values
 
 @Service(FontVariant)
 abstract class FontVariantService {
@@ -73,6 +80,30 @@ abstract class FontVariantService {
 		variant.eot = results.eot
 		variant.woff = results.woff
 		variant.svg = results.svg
+		
+		// @see https://stackoverflow.com/a/18123024/251930
+		InputStream fontStream = new ByteArrayInputStream(variant.ttf ?: variant.original)
+		
+		try {
+			AWTFont sourceFont = AWTFont.createFont(AWTFont.TRUETYPE_FONT, fontStream)
+			// we set size to 72 since "points" are 1/72th of an inch, so let's
+			// make it a full and even 1 inch
+			AWTFont awtFont = sourceFont.deriveFont(72.0f)
+			Canvas canvas = new Canvas()
+			FontMetrics metrics = canvas.getFontMetrics(awtFont)
+//			BufferedImage offscreenBuffer = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR)
+//			Graphics2D offscreenGraphics = offscreenBuffer.createGraphics()
+//			FontMetrics metrics = offscreenGraphics.getFontMetrics(awtFont)
+			
+			variant.maxAscent = metrics.maxAscent
+			variant.maxDescent = metrics.maxDescent
+			variant.leading = metrics.leading
+			variant.maxAdvance = metrics.maxAdvance
+			variant.pointSize = awtFont.size2D
+		}
+		finally {
+			fontStream.close()
+		}
 	}
 	
 	/**
@@ -200,6 +231,59 @@ abstract class FontVariantService {
 	
 	String fileBasename(FontVariant fontVariant) {
 		return Beans.sanitizeService.sanitizeWithDashes(fontVariant as String)
+	}
+
+	List<FontVariant> search(Map args) {
+		FontVariant.withCriteria {
+			if (args.containsKey("category") && !Values.isBlank(args.category)) {
+				Font.Category category = args.category instanceof String ? Font.Category.valueOf(args.category) : args.category
+				
+				font {
+					eq("category", category)
+				}
+			}
+			
+			if (args.containsKey("weight") && !Values.isBlank(args.weight)) {
+				FontVariant.Weight weight = args.weight instanceof String ? FontVariant.Weight.valueOf(args.weight) : args.weight
+				
+				eq("weight", weight)
+			}
+			
+			if (args.containsKey("stretch") && !Values.isBlank(args.stretch)) {
+				FontVariant.Stretch stretch = args.stretch instanceof String ? FontVariant.Stretch.valueOf(args.stretch) : args.stretch
+				
+				eq("stretch", stretch)
+			}
+			
+			if (args.containsKey("italic") && !Values.isBlank(args.italic)) {
+				eq("italic", args.italic)
+			}
+			
+			if (args.containsKey("advance") && !Values.isBlank(args.advance)) {
+				double advance = args.advance as Double
+				
+				// whatever width/advance we're looking for, create a 10% envelope around it
+				between("maxAdvance", Math.round(advance / 1.1) as Integer, Math.round(advance * 1.1) as Integer)
+			}
+			
+			font {
+				order("name")
+			}
+			order("italic")
+		}
+	}
+	
+	int[] advanceLimits() {
+		FontVariant.withCriteria(uniqueResult: true) {
+			font {
+				eq("transitory", false)
+			}
+			
+			projections {
+				min("maxAdvance")
+				max("maxAdvance")
+			}
+		}
 	}
 	
 }

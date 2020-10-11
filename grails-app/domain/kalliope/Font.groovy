@@ -39,6 +39,8 @@ class Font {
 	
 	String name
 	
+	String slug
+	
 	Category category
 	
 	static hasMany = [variants: FontVariant]
@@ -56,6 +58,7 @@ class Font {
 
     static constraints = {
 		name(blank: false)
+		slug(blank: false, unique: true)
     }
 	
 	static mapping = {
@@ -71,6 +74,11 @@ class Font {
 		// the font's name into CSS
 		if (name) {
 			name = name.replaceAll("'", "")
+		}
+		
+		// create a slug
+		if (!slug) {
+			slug = Beans.sanitizeService.sanitizeWithDashes(name)
 		}
 	}
 	

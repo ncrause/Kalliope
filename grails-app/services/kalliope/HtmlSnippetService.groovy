@@ -17,6 +17,7 @@
 
 package kalliope
 
+import grails.gorm.DetachedCriteria
 import grails.gorm.services.Service
 import grails.gorm.transactions.Transactional
 
@@ -37,12 +38,40 @@ abstract class HtmlSnippetService {
     abstract void delete(Serializable id)
 
 	@Transactional
-    abstract HtmlSnippet save(HtmlSnippet record)
+    HtmlSnippet save(HtmlSnippet record) {
+		if (!record.position && record.location) {
+			record.position = maximumPositionByLocation(record.location) + 1
+		}
+		
+		record.save(failOnError: true)
+		
+		return record.refresh()
+	}
 	
-	List<HtmlSnippet> listByLocationOrderedByPosition(HtmlSnippet.Location targetLocation) {
+	DetachedCriteria byLocation(PageLocation targetLocation) {
 		HtmlSnippet.where {
 			location == targetLocation
-		}.list(sort: "position", order: "asc")
+		}
+	}
+	
+	List<HtmlSnippet> listByLocationOrderedByPosition(PageLocation targetLocation) {
+		byLocation(targetLocation).list(sort: "position", order: "asc")
+	}
+	
+	int maximumPositionByLocation(PageLocation targetLocation) {
+		byLocation(targetLocation).max("position").get() ?: 0
+	}
+	
+	boolean locationExists(PageLocation targetLocation) {
+		byLocation(targetLocation).count() > 0
+	}
+	
+	/**
+	 * Calculated the col-md-X that the layout body should be given the
+	 * potential presence of left and right snippets.
+	 */
+	int getBodyColumnWidth() {
+		12 - (locationExists(PageLocation.LEFT) ? 3 : 0) - (locationExists(PageLocation.RIGHT) ? 3 : 0)
 	}
 	
 }

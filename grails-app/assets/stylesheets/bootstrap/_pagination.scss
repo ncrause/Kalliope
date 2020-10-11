@@ -7,19 +7,23 @@
   position: relative;
   display: block;
   color: $pagination-color;
+  text-decoration: if($link-decoration == none, null, none);
   background-color: $pagination-bg;
   border: $pagination-border-width solid $pagination-border-color;
+  @include transition($pagination-transition);
 
   &:hover {
     z-index: 2;
     color: $pagination-hover-color;
-    text-decoration: none;
+    text-decoration: if($link-hover-decoration == underline, none, null);
     background-color: $pagination-hover-bg;
     border-color: $pagination-hover-border-color;
   }
 
   &:focus {
     z-index: 3;
+    color: $pagination-focus-color;
+    background-color: $pagination-focus-bg;
     outline: $pagination-focus-outline;
     box-shadow: $pagination-focus-box-shadow;
   }
@@ -33,15 +37,13 @@
   &.active .page-link {
     z-index: 3;
     color: $pagination-active-color;
-    background-color: $pagination-active-bg;
+    @include gradient-bg($pagination-active-bg);
     border-color: $pagination-active-border-color;
   }
 
   &.disabled .page-link {
     color: $pagination-disabled-color;
     pointer-events: none;
-    // Opinionated: remove the "hand" cursor set previously for .page-link
-    cursor: auto;
     background-color: $pagination-disabled-bg;
     border-color: $pagination-disabled-border-color;
   }
@@ -51,12 +53,12 @@
 //
 // Sizing
 //
-@include pagination-size($pagination-padding-y, $pagination-padding-x, null, $pagination-line-height, $pagination-border-radius);
+@include pagination-size($pagination-padding-y, $pagination-padding-x, null, $pagination-border-radius);
 
 .pagination-lg {
-  @include pagination-size($pagination-padding-y-lg, $pagination-padding-x-lg, $font-size-lg, $line-height-lg, $border-radius-lg);
+  @include pagination-size($pagination-padding-y-lg, $pagination-padding-x-lg, $font-size-lg, $border-radius-lg);
 }
 
 .pagination-sm {
-  @include pagination-size($pagination-padding-y-sm, $pagination-padding-x-sm, $font-size-sm, $line-height-sm, $border-radius-sm);
+  @include pagination-size($pagination-padding-y-sm, $pagination-padding-x-sm, $font-size-sm, $border-radius-sm);
 }

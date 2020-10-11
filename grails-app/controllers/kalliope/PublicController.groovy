@@ -6,6 +6,8 @@ class PublicController {
 
     FontService fontService
 	
+	FontVariantService fontVariantService
+	
 	static allowedMethods = [upload: "POST"]
 	
 	private String mimeType(String format) {
@@ -49,6 +51,7 @@ class PublicController {
 				permanentFonts: fontService.listRecent(false, 4), 
 				transitoryFonts: fontService.listRecent(true, 4),
 				intradayCount: fontService.intradayCount,
+				// the following 2 fonts are just for rendering the "Kalliope" and "Font Server" texts, respectively
 				scriptFont: fontService.findByName("Pinyon Script"),
 				serifFont: fontService.findByName("Bree Serif")
 		])
@@ -108,6 +111,35 @@ class PublicController {
 ////		response.outputStream.flush()
 //		
 //		return null
+	}
+	
+	def browse() {
+		def category = params.containsKey("category") && params.category != "null" ? Font.Category.valueOf(params.category) : null;
+		def weight = params.containsKey("weight") ? FontVariant.Weight.valueOf(params.weight) : FontVariant.Weight.NORMAL
+		def stretch = params.containsKey("stretch") ? FontVariant.Stretch.valueOf(params.stretch) : FontVariant.Stretch.NORMAL
+		def italic = params.containsKey("italic") ? Integer.valueOf(params.italic) : 0
+		def enableAdvance = params.containsKey("enableAdvance") ? Boolean.valueOf(params.enableAdvance) : false
+		def (int minAdvance, int maxAdvance) = fontVariantService.advanceLimits()
+		def advance = params.containsKey("advance") ? Integer.valueOf(params.advance) : Math.round((minAdvance.toDouble() + maxAdvance.toDouble()) / 2)
+		def fontVariants = fontVariantService.search(category: category,
+				weight: weight, stretch: stretch, 
+				italic: italic == 1 ? true : italic == 0 ? false : null,
+				advance: enableAdvance ? advance : null)
+		
+		render(view: "browse", model: [
+				categories: Font.Category.values(),
+				category: category,
+				weights: FontVariant.Weight.values(),
+				weight: weight,
+				stretches: FontVariant.Stretch.values(),
+				stretch: stretch,
+				italic: italic,
+				enableAdvance: enableAdvance,
+				minAdvance: minAdvance,
+				maxAdvance: maxAdvance,
+				advance: advance,
+				fontVariants: fontVariants
+		])
 	}
 	
 }

@@ -30,54 +30,53 @@
         </div>
 		--%>
 		
-		<div class="container-fluid">
-			<ul class="nav nav-pills">
-				<li class="nav-item">
-					<g:link controller="public" action="index" class="nav-link"><i class="fas fa-home"></i> <g:message code="default.home.label"/></g:link>
-				</li>
+		<ul class="nav nav-pills">
+			<li class="nav-item">
+				<g:link controller="public" action="index" class="nav-link"><i class="fas fa-home"></i> <g:message code="default.home.label"/></g:link>
+			</li>
 
-				<li class="nav-item">
-					<g:link action="create" class="nav-link"><i class="fas fa-plus-square"></i> <g:message code="default.new.label" args="[entityName]" /></g:link>
-				</li>
+			<li class="nav-item">
+				<g:link action="create" class="nav-link"><i class="fas fa-plus-square"></i> <g:message code="default.new.label" args="[entityName]" /></g:link>
+			</li>
 
-				<li class="nav-item">
-					<g:link action="quick" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="${message(code: 'quick-upload.title')}"><i class="fas fa-fighter-jet"></i> <g:message code="quick-upload.label" args="[entityName]" /></g:link>
-				</li>
-			</ul>
-			
-			<div role="main">
-				<h2><g:message code="default.list.label" args="[entityName]" /></h2>
-				
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<g:sortableColumn namespace="admin" property="name" title="Name" />
-								<th>Category</th>
-								<th>Variants</th>
-							</tr>
-						</thead>
+			<li class="nav-item">
+				<g:link action="quick" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="${message(code: 'quick-upload.title')}"><i class="fas fa-fighter-jet"></i> <g:message code="quick-upload.label" args="[entityName]" /></g:link>
+			</li>
+		</ul>
+
+		<div role="main">
+			<h2><g:message code="default.list.label" args="[entityName]" /></h2>
+
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<g:sortableColumn namespace="admin" property="name" title="Name" />
+							<th>Slug</th>
+							<th>Category</th>
+							<th>Variants</th>
+						</tr>
+					</thead>
 						
-						<tbody>
-							<g:each in="${fontList}" var="font">
-								<tr>
-									<td class="text-nowrap"><g:link action="show" id="${font.ident()}">${font.name}</g:link></td>
-									<td class="text-nowrap">${font.category.failoverFontFace()}</td>
-									<td><g:render template="/shared/fontVariants" model="[font: font]"/>
-									</td>
-								</tr>
-							</g:each>
-						</tbody>
-					</table>
-				</div>
-				
-				<g:if test="${fontCount > params.max}">
-					<nav aria-label="Font pagination">
-						<bootstrap:paginate total="${fontCount}" />
-					</nav>
-				</g:if>
-				
+					<tbody>
+						<g:each in="${fontList}" var="font">
+							<tr>
+								<td class="text-nowrap"><g:link action="show" id="${font.ident()}">${font.name}</g:link></td>
+								<td class="text-nowrap">${font.slug}</td>
+								<td class="text-nowrap">${font.category.failoverFontFace()}</td>
+								<td><g:render template="/shared/fontVariants" model="[font: font]"/>
+								</td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
 			</div>
+				
+			<g:if test="${fontCount > params.max}">
+				<nav aria-label="Font pagination">
+					<bootstrap:paginate total="${fontCount}" />
+				</nav>
+			</g:if>
 		</div>
     </body>
 </html>

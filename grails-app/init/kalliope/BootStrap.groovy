@@ -16,17 +16,17 @@ class BootStrap {
 		if (!Font.findByName("Ubuntu")) {
 			new Ubuntu().run()
 		}
-		
+
 		// Simple serif font with no variants
 		if (!Font.findByName("Bree Serif")) {
 			new BreeSerif().run()
 		}
-		
+
 		// Simple monospace font with no variants
 		if (!Font.findByName("PT Mono")) {
 			new PTMono().run()
 		}
-		
+
 		// Simple cursive font with no variants
 		if (!Font.findByName("Pinyon Script")) {
 			new PinyonScript().run()
