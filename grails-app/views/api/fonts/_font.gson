@@ -1,0 +1,13 @@
+import kalliope.Font
+
+model {
+	Font font
+}
+
+json {
+	id font.id
+	name font.name
+	slug font.slug
+	category font.category
+}
+

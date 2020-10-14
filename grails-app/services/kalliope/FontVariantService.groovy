@@ -235,6 +235,10 @@ abstract class FontVariantService {
 
 	List<FontVariant> search(Map args) {
 		FontVariant.withCriteria {
+			font {
+				eq("transitory", false)
+			}
+			
 			if (args.containsKey("category") && !Values.isBlank(args.category)) {
 				Font.Category category = args.category instanceof String ? Font.Category.valueOf(args.category) : args.category
 				
