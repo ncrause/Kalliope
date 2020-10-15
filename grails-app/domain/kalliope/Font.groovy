@@ -37,11 +37,28 @@ class Font {
 		}
 	}
 	
+	/**
+	 * Pretty visual/display name
+	 */
 	String name
 	
+	/**
+	 * URL-friendly "slug" based on the name
+	 */
 	String slug
 	
+	/**
+	 * The general category into which this font belongs - used to define a
+	 * "failover" font.
+	 */
 	Category category
+	
+	/**
+	 * Typically, we can just use a pangram for demo text, but some fonts, such
+	 * as wingdings types or font-awesome types, will need something with a
+	 * little more "oompf"
+	 */
+	String demoText
 	
 	static hasMany = [variants: FontVariant]
 	
@@ -59,6 +76,7 @@ class Font {
     static constraints = {
 		name(blank: false)
 		slug(blank: false, unique: true)
+		demoText(nullable: true)
     }
 	
 	static mapping = {

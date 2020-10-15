@@ -235,6 +235,10 @@ abstract class FontVariantService {
 
 	List<FontVariant> search(Map args) {
 		FontVariant.withCriteria {
+			font {
+				eq("transitory", false)
+			}
+			
 			if (args.containsKey("category") && !Values.isBlank(args.category)) {
 				Font.Category category = args.category instanceof String ? Font.Category.valueOf(args.category) : args.category
 				
@@ -284,6 +288,15 @@ abstract class FontVariantService {
 				max("maxAdvance")
 			}
 		}
+	}
+	
+	/**
+	 * Use this to try to determine the "default" variant of a particular font
+	 */
+	FontVariant defaultVariant(Font font) {
+		FontVariant variant = font.variants.find { it.weight == FontVariant.Weight.NORMAL && it.stretch == FontVariant.Stretch.NORMAL && !it.italic }
+		
+		return variant ?: font.variants.first
 	}
 	
 }

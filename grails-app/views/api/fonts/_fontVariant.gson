@@ -1,0 +1,15 @@
+import kalliope.Beans
+import kalliope.FontVariant
+
+model {
+	FontVariant fontVariant
+}
+
+json {
+	id fontVariant.id
+	font tmpl.font(fontVariant.font)
+	weight fontVariant.weight
+	stretch fontVariant.stretch
+	italic fontVariant.italic
+	url g.link(absolute: true, controller: "public", action: "css", id: fontVariant.id)
+}
