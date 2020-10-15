@@ -1,0 +1,7 @@
+import kalliope.FontVariant
+
+model {
+	List<FontVariant> fontVariants
+}
+
+json tmpl.fontVariant(fontVariants)

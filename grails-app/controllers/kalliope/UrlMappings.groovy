@@ -3,6 +3,7 @@ package kalliope
 class UrlMappings {
 
     static mappings = {
+		"/api/$controller/$action/$id?(.$format)?"(namespace: "api")
 		"/admin/$controller/$action?/$id?(.$format)?"(namespace: "admin")
 		"/admin"(namespace: "admin", controller: "font", action: "index")
         "/public/$action?/$id?(.$format)?"(controller: "public")
