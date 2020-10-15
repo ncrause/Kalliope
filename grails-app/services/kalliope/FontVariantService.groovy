@@ -290,4 +290,13 @@ abstract class FontVariantService {
 		}
 	}
 	
+	/**
+	 * Use this to try to determine the "default" variant of a particular font
+	 */
+	FontVariant defaultVariant(Font font) {
+		FontVariant variant = font.variants.find { it.weight == FontVariant.Weight.NORMAL && it.stretch == FontVariant.Stretch.NORMAL && !it.italic }
+		
+		return variant ?: font.variants.first
+	}
+	
 }
