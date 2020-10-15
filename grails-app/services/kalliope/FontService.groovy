@@ -41,8 +41,10 @@ abstract class FontService {
 	@Transactional
     abstract Font save(Font record)
 	
-	@Transactional @ReadOnly
+//	@Transactional @ReadOnly
 	abstract Font findByName(String name)
+	
+	abstract Font findBySlug(String slug)
 	
 	FontVariantService getFontVariantService() {
 		return Beans.fontVariantService
